@@ -1,24 +1,42 @@
 #!/usr/bin/env python3
 import random
 
-class Services():
+class Services:
+    _LETTERS = "ABCDEFGHIJKLMNOPQRSTUVWXYZ"
+    _NUMBERS = "123456789"
+    _SYMBOLS = "!@#$%^&*()-+=/~|"
 
-    __LETTERS = "ABCDEFGHIJKLMNOPQRSTUVWXYZ"
-    __NUMBERS = "123456789"
-    __SYMBOLS = "!@#$%^&*()-+=/~|"
+    def __init__(self) -> None:
 
-    __available_password_symbols = ""
+        self._password_parameters = {
+            "password_length": 0,
+            "includes_numbers": False,
+            "includes_symbols": False,
+         }
 
-    _last_generated_password = "hovno"
+        self._last_generated_password = ""
 
-    def get_password_parameters(self, options: dict) -> str:
+    @property
+    def password_parameters(self) -> dict:
+        return dict(self._password_parameters)
 
-        return ""
+    @password_parameters.setter
+    def password_parameters(self, requested_options: dict) -> None:
+        if not self._password_parameters.keys() == requested_options.keys():
+            raise Exception("dict needs to contain all keys")
+        self._password_parameters = self._password_parameters | requested_options
+
+
+    
 
     def _generate_password(self, ):
         pass
 
 
+    def set_password(self, password_parameters: dict):
+        pass
+
+    @property
     def get_last_generated_password(self):
         return self._last_generated_password
 
