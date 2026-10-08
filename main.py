@@ -1,11 +1,10 @@
 #!/usr/bin/env python3
-from services import Services
+from ui import UI
 
 def main():
-    services = Services()
+    ui = UI()
 
-    for _ in range(5):
-        print(services.random_number())
+    print(ui.get_password())
 
 if __name__ == "__main__":
     main()
