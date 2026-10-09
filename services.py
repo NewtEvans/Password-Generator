@@ -38,8 +38,7 @@ class Services:
         usable_symbols = "ABCDEFGHIJKLMNOPQRSTUVWXYZ"
         password = ""
 
-
-        if self._password_parameters["includes_number"] == True:
+        if self._password_parameters["includes_numbers"] == True:
             usable_symbols += "123456789"
         if self._password_parameters["includes_symbols"] == True:
             usable_symbols += "!@#$%^&*"
