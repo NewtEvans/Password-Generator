@@ -11,5 +11,8 @@ def main():
     else:
         print(ui.get_password_params())
 
+    ui.set_password()
+    print(ui.get_password())
+
 if __name__ == "__main__":
     main()

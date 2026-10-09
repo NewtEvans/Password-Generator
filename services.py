@@ -2,10 +2,6 @@
 import random
 
 class Services:
-    _LETTERS = "ABCDEFGHIJKLMNOPQRSTUVWXYZ"
-    _NUMBERS = "123456789"
-    _SYMBOLS = "!@#$%^&*()-+=/~|"
-
     def __init__(self) -> None:
 
         self._password_parameters = {
@@ -36,18 +32,24 @@ class Services:
             raise Exception("dict needs to contain all keys")
         self._password_parameters = self._password_parameters | requested_options
 
+    def generate_password(self) -> None:
+        from random import randint
+        password_length = self._password_parameters["password_length"]
+        usable_symbols = "ABCDEFGHIJKLMNOPQRSTUVWXYZ"
+        password = ""
 
 
+        if self._password_parameters["includes_number"] == True:
+            usable_symbols += "123456789"
+        if self._password_parameters["includes_symbols"] == True:
+            usable_symbols += "!@#$%^&*"
 
-    def _generate_password(self, ):
-        pass
-
-
-    def set_password(self, password_parameters: dict):
-        pass
+        for _ in range(password_length):
+            password += usable_symbols[randint(0, len(usable_symbols) - 1)]
+            self._last_generated_password = password
 
     @property
-    def get_last_generated_password(self):
+    def last_generated_password(self):
         return self._last_generated_password
 
     # helper functions

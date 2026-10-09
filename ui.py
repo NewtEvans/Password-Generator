@@ -19,3 +19,9 @@ class UI:
 
     def get_password_params(self):
         return self.service.password_parameters
+
+    def set_password(self):
+        self.service.generate_password()
+
+    def get_password(self):
+        return self.service.last_generated_password
