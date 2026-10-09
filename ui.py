@@ -7,6 +7,13 @@ class UI:
     def __init__(self) -> None:
         print("--- Password Generator ---")
 
+    def input_password_params(self) -> dict:
+        password_length = int(input("insert password_length: "))
+        includes_numbers = bool(input("numbers? True/False: "))
+        includes_symbols = bool(input("symbols? True/False: "))
+
+        return self.service.input_password_params(password_length, includes_numbers, includes_symbols)
+
     def set_password_params(self, requested_params: dict) -> None:
         self.service.password_parameters = requested_params
 

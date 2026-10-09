@@ -16,6 +16,16 @@ class Services:
 
         self._last_generated_password = ""
 
+    def input_password_params(self, password_length: int, includes_numbers: bool, includes_symbols: bool) -> dict:
+
+        dict = {
+            "password_length": password_length,
+            "includes_numbers": includes_numbers,
+            "includes_symbols": includes_symbols,
+        }
+
+        return dict
+
     @property
     def password_parameters(self) -> dict:
         return dict(self._password_parameters)
@@ -27,7 +37,7 @@ class Services:
         self._password_parameters = self._password_parameters | requested_options
 
 
-    
+
 
     def _generate_password(self, ):
         pass
