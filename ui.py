@@ -1,7 +1,7 @@
 #!/usr/bin/env python3
 from services import *
 
-class UI:
+class TerminalUI:
     service = Services()
 
     def __init__(self) -> None:
@@ -25,3 +25,6 @@ class UI:
 
     def get_password(self):
         return self.service.last_generated_password
+
+class WindowUI:
+    pass

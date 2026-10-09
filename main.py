@@ -1,8 +1,8 @@
 #!/usr/bin/env python3
-from ui import UI
+from ui import TerminalUI
 
 def main():
-    ui = UI()
+    ui = TerminalUI()
 
     try:
         ui.set_password_params(ui.input_password_params())
