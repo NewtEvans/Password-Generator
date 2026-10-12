@@ -32,7 +32,6 @@ class Services:
 
     @password_parameters.setter
     def password_parameters(self, requested_options: dict) -> None:
-        #TODO need to be fixed
         if not self._password_parameters.keys() == requested_options.keys():
             raise Exception("dict needs to contain all keys")
         if requested_options["includes_uppercases"] == False and requested_options["includes_lowercases"] == False:
