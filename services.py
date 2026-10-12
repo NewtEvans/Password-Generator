@@ -7,7 +7,7 @@ class Services:
         self._password_parameters = {
             "password_length": 0,
             "includes_uppercases": False,
-            "includes_lowercase": False,
+            "includes_lowercases": False,
             "includes_numbers": False,
             "includes_symbols": False,
          }
@@ -35,8 +35,8 @@ class Services:
         #TODO need to be fixed
         if not self._password_parameters.keys() == requested_options.keys():
             raise Exception("dict needs to contain all keys")
-        if self._password_parameters["includes_uppercases"] == False and self._password_parameters["includes_lowercases"] == False:
-            raise Exeption("at least one type of cases has to be true")
+        if requested_options["includes_uppercases"] == False and requested_options["includes_lowercases"] == False:
+            raise Exception("at least one type of cases has to be true")
         self._password_parameters = self._password_parameters | requested_options
 
     def generate_password(self) -> None:

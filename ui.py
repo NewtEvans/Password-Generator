@@ -30,21 +30,21 @@ class TerminalUI:
     def get_password(self):
         return self.service.last_generated_password
 
-class WindowUI:
+#class WindowUI:
     #root window
     #window title
     #window resolutions
-    root = Tk()
-    root.title("Password Generator")
-    root.geometry("250x150")
+ #   root = Tk()
+  #  root.title("Password Generator")
+   # root.geometry("250x150")
 
     #adding a label to the root
-    label = Label(root, text="Length")
-    label.grid()
+  #  label = Label(root, text="Length")
+   # label.grid()
 
     #adding an entry field
-    length_field = Entry(root, width=2)
-    length_field.grid(column=1, row=0)
+#    length_field = Entry(root, width=2)
+ #   length_field.grid(column=1, row=0)
     #all widgets will be here
     #has to be the last function
-    root.mainloop()
+  #  root.mainloop()
