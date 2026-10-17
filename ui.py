@@ -41,6 +41,7 @@ class WindowUI:
     includes_symbols = False
 
     def password_generation_handler(self):
+        self.service.password_parameters = self.service.input_password_params(self.password_length, self.u_case_var.get(), self.l_case_var.get(), self.numbers_var.get(), self.symbols_var.get())
         self.service.generate_password()
         self.password_label.config(text = self.service.last_generated_password)
 
@@ -64,16 +65,21 @@ class WindowUI:
         #all widgets will be here
         #has to be the last function
 
+        self.u_case_var = BooleanVar()
+        self.l_case_var = BooleanVar()
+        self.numbers_var = BooleanVar()
+        self.symbols_var = BooleanVar()
+
         #options
         #TODO mayby group them somehow
-        lower_cases = Checkbutton(root, text="Enable lowercases")
-        lower_cases.grid(row=2, column=0)
-        upper_cases = Checkbutton(root, text="Enable uppercases")
-        upper_cases.grid(row=2, column=1)
-        numbers = Checkbutton(root, text="Enable numbers")
-        numbers.grid(row=2, column=2)
-        symbols = Checkbutton(root, text="Enable symbols")
-        symbols.grid(row=2, column=3)
+        self.upper_cases = Checkbutton(root, text="Enable uppercases", variable=self.u_case_var)
+        self.upper_cases.grid(row=2, column=1)
+        self.lower_cases = Checkbutton(root, text="Enable lowercases", variable=self.l_case_var)
+        self.lower_cases.grid(row=2, column=0)
+        self.numbers = Checkbutton(root, text="Enable numbers", variable=self.numbers_var)
+        self.numbers.grid(row=2, column=2)
+        self.symbols = Checkbutton(root, text="Enable symbols", variable=self.symbols_var)
+        self.symbols.grid(row=2, column=3)
 
         button = Button(root, text="Generate", command=self.password_generation_handler)
         button.grid(row=3, column=0)
