@@ -41,7 +41,7 @@ class WindowUI:
     includes_symbols = False
 
     def password_generation_handler(self):
-        self.service.password_parameters = self.service.input_password_params(self.password_length, self.u_case_var.get(), self.l_case_var.get(), self.numbers_var.get(), self.symbols_var.get())
+        self.service.password_parameters = self.service.input_password_params(self.length_var.get(), self.u_case_var.get(), self.l_case_var.get(), self.numbers_var.get(), self.symbols_var.get())
         self.service.generate_password()
         self.password_label.config(text = self.service.last_generated_password)
 
@@ -57,11 +57,13 @@ class WindowUI:
 
         #adding a label to the root
         label = Label(root, text="Length")
-        label.grid()
+        label.grid(row=0, column=0)
+
+        self.length_var = IntVar(value=6)
 
         #adding an entry field
-        length_field = Entry(root, width=2)
-        length_field.grid(column=1, row=0)
+        length_field = Entry(root, width=2, textvariable=self.length_var)
+        length_field.grid(row=0, column=1)
         #all widgets will be here
         #has to be the last function
 
@@ -85,7 +87,7 @@ class WindowUI:
         button.grid(row=3, column=0)
 
         self.password_label = Label(root)
-        self.password_label.grid(row=4, column=0)
+        self.password_label.grid(row=3, column=2)
 
         #windows resize disable
        # root.resizable(False, False)
