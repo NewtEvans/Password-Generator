@@ -1,7 +1,6 @@
 #!/usr/bin/env python3
 from services import *
 from tkinter import *
-from tkinter import ttk
 
 
 class TerminalUI:
@@ -47,26 +46,34 @@ class WindowUI:
             self.message_label.config(text = f"{e}")
         else:
             self.service.generate_password()
-            self.message_label.config(text = self.service.last_generated_password)
-    
+            self._return_password_into_label()
+
+    def copy_button_handler(self):
+            self.root.clipboard_clear()
+            if self.service.last_generated_password == "":
+                raise Exception("password is not generated yet")
+            self.root.clipboard_append(self.service.last_generated_password)
+            self.message_label.config(text = f"Copied!")
+            self.root.after(500, self._return_password_into_label)
+
     def __init__(self):
         self.service.password_parameters = self.service.input_password_params(self.password_length, self.includes_uppercases, self.includes_lowercases, self.includes_numbers, self.includes_symbols)
         print(self.service.password_parameters)
         #root window
         #window title
         #window resolutions
-        root = Tk()
-        root.title("Password Generator")
-        root.geometry("500x100")
+        self.root = Tk()
+        self.root.title("Password Generator")
+        self.root.geometry("500x100")
 
         #adding a label to the root
-        label = Label(root, text="Length")
+        label = Label(self.root, text="Length")
         label.grid(row=0, column=0)
 
         self.length_var = IntVar(value=6)
 
         #adding an entry field
-        length_field = Entry(root, width=2, textvariable=self.length_var)
+        length_field = Entry(self.root, width=2, textvariable=self.length_var)
         length_field.grid(row=0, column=1)
         #all widgets will be here
         #has to be the last function
@@ -78,23 +85,29 @@ class WindowUI:
 
         #options
         #TODO mayby group them somehow
-        self.upper_cases = Checkbutton(root, text="Enable uppercases", variable=self.u_case_var)
+        self.upper_cases = Checkbutton(self.root, text="Enable uppercases", variable=self.u_case_var)
         self.upper_cases.grid(row=2, column=1)
-        self.lower_cases = Checkbutton(root, text="Enable lowercases", variable=self.l_case_var)
+        self.lower_cases = Checkbutton(self.root, text="Enable lowercases", variable=self.l_case_var)
         self.lower_cases.grid(row=2, column=0)
-        self.numbers = Checkbutton(root, text="Enable numbers", variable=self.numbers_var)
+        self.numbers = Checkbutton(self.root, text="Enable numbers", variable=self.numbers_var)
         self.numbers.grid(row=2, column=2)
-        self.symbols = Checkbutton(root, text="Enable symbols", variable=self.symbols_var)
+        self.symbols = Checkbutton(self.root, text="Enable symbols", variable=self.symbols_var)
         self.symbols.grid(row=2, column=3)
 
-        button = Button(root, text="Generate", command=self.password_generation_handler)
-        button.grid(row=3, column=0)
+        button_generate = Button(self.root, text="Generate", command=self.password_generation_handler)
+        button_generate.grid(row=3, column=0)
+        button_copy = Button(self.root, text="Copy", command=self.copy_button_handler)
+        button_copy.grid(row=3, column=3)
+
 
         #TODO I want to change password label into message label and print there also error messages
-        self.message_label = Label(root)
-        self.message_label.grid(row=3, column=2)
+        self.message_label = Label(self.root)
+        self.message_label.grid(row=4)
 
         #windows resize disable
-        root.resizable(False, False)
+        self.root.resizable(False, False)
         #mainloop
-        root.mainloop()
+        self.root.mainloop()
+
+    def _return_password_into_label(self) -> None:
+        self.message_label.config(text = self.service.last_generated_password)
