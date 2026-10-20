@@ -34,17 +34,21 @@ class TerminalUI:
 class WindowUI:
     service = Services()
 
-    password_length = 8
+    password_length = 0
     includes_uppercases = False
     includes_lowercases = True
     includes_numbers = False
     includes_symbols = False
 
     def password_generation_handler(self):
-        self.service.password_parameters = self.service.input_password_params(self.length_var.get(), self.u_case_var.get(), self.l_case_var.get(), self.numbers_var.get(), self.symbols_var.get())
-        self.service.generate_password()
-        self.password_label.config(text = self.service.last_generated_password)
-
+        try:
+            self.service.password_parameters = self.service.input_password_params(self.length_var.get(), self.u_case_var.get(), self.l_case_var.get(), self.numbers_var.get(), self.symbols_var.get())
+        except Exception as e:
+            self.message_label.config(text = f"{e}")
+        else:
+            self.service.generate_password()
+            self.message_label.config(text = self.service.last_generated_password)
+    
     def __init__(self):
         self.service.password_parameters = self.service.input_password_params(self.password_length, self.includes_uppercases, self.includes_lowercases, self.includes_numbers, self.includes_symbols)
         print(self.service.password_parameters)
@@ -86,10 +90,11 @@ class WindowUI:
         button = Button(root, text="Generate", command=self.password_generation_handler)
         button.grid(row=3, column=0)
 
-        self.password_label = Label(root)
-        self.password_label.grid(row=3, column=2)
+        #TODO I want to change password label into message label and print there also error messages
+        self.message_label = Label(root)
+        self.message_label.grid(row=3, column=2)
 
         #windows resize disable
-       # root.resizable(False, False)
+        root.resizable(False, False)
         #mainloop
         root.mainloop()
