@@ -43,18 +43,22 @@ class WindowUI:
         try:
             self.service.password_parameters = self.service.input_password_params(self.length_var.get(), self.u_case_var.get(), self.l_case_var.get(), self.numbers_var.get(), self.symbols_var.get())
         except Exception as e:
-            self.message_label.config(text = f"{e}")
+            self._return_text_into_label(e)
         else:
             self.service.generate_password()
-            self._return_password_into_label()
+            self._return_text_into_label()
+
 
     def copy_button_handler(self):
-            self.root.clipboard_clear()
-            if self.service.last_generated_password == "":
-                raise Exception("password is not generated yet")
-            self.root.clipboard_append(self.service.last_generated_password)
-            self.message_label.config(text = f"Copied!")
-            self.root.after(500, self._return_password_into_label)
+        self.root.clipboard_clear()
+        #TODO this needs to be updated - it's possible to copy error message now
+        if self.service.last_generated_password== "":
+            raise Exception("password is not generated yet")
+        if self.last_message != self.service.last_generated_password:
+            raise Exception("generate valid password first")
+        self.root.clipboard_append(self.service.last_generated_password)
+        self.message_label.config(text = f"Copied!")
+        self.root.after(800, self._return_text_into_label)
 
     def __init__(self):
         self.service.password_parameters = self.service.input_password_params(self.password_length, self.includes_uppercases, self.includes_lowercases, self.includes_numbers, self.includes_symbols)
@@ -102,12 +106,21 @@ class WindowUI:
 
         #TODO I want to change password label into message label and print there also error messages
         self.message_label = Label(self.root)
-        self.message_label.grid(row=4)
+        self.message_label.grid(row=4, columnspan=3)
 
         #windows resize disable
         self.root.resizable(False, False)
         #mainloop
         self.root.mainloop()
 
-    def _return_password_into_label(self) -> None:
-        self.message_label.config(text = self.service.last_generated_password)
+   # def _return_password_into_label(self) -> None:
+   #     self.message_label.config(text = self.service.last_generated_password)
+    last_message = ""
+
+    def _return_text_into_label(self, message=None) -> None:
+        if isinstance(message, Exception):
+            self.last_message = str(message)
+            self.message_label.config(text = self.last_message, foreground="red")
+        else:
+            self.last_message = self.service.last_generated_password
+            self.message_label.config(text = self.last_message, foreground="green")

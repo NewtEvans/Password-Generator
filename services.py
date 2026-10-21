@@ -62,6 +62,7 @@ class Services:
     def last_generated_password(self):
         return self._last_generated_password
 
+
     # helper functions
     def _random_number(self) -> int:
         number = random.randint(1, 5)
